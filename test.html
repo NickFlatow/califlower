@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  
+<body>
+    <button id="pl">Play</button>
+    <button id="pa">Pause</button>
+      
+    <div style="display:flex;">
+        <p id="min">0</p>
+            
+        <p id="sec">0</p>
+            
+        <p id="milisec">0</p>
+    </div>
+  
+    <script>
+        document.getElementById("pl")
+            .setAttribute("disabled", "true")
+        var stats = 0;
+  
+        function waitforme(ms) {
+            return new Promise(resolve => {
+                setTimeout(() => { resolve('') }, ms);
+            })
+        }
+  
+        function pauser() {
+            return new Promise(resolve => {
+                let playbuttonclick = function () {
+                    document.getElementById("pa")
+                        .removeAttribute("disabled")
+  
+                    document.getElementById("pl")
+                        .setAttribute("disabled", "true")
+  
+                    document.getElementById("pl")
+                        .removeEventListener("click", 
+                                    playbuttonclick);
+  
+                    stats = 0;
+                    resolve("resolved");
+                }
+                document.getElementById("pl").addEventListener("click", playbuttonclick)
+            })
+        }
+  
+        document.getElementById("pa")
+            .addEventListener("click", function () {
+  
+            stats = 1;
+  
+            document.getElementById("pa")
+                .setAttribute("disabled", "true")
+  
+            document.getElementById("pl")
+                .removeAttribute("disabled")
+  
+        })
+  
+        let second;
+        async function go() {
+            second = document.getElementById("sec");
+  
+            for (let a = 0; ; a = a + 100) {
+                if (a == 1000) {
+                    a = 0;
+                    second.innerHTML =
+                         Number(second.innerHTML) + 1;
+  
+                }
+  
+                if (second.innerHTML == 60) {
+                    second.innerHTML = 0;
+  
+                    let minute = document
+                        .getElementById("min");
+  
+                    minute.innerHTML = 
+                        Number(minute.innerHTML) + 1;
+                }
+  
+                document.getElementById("milisec")
+                            .innerHTML = a / 100;
+                await waitforme(100);
+                if (stats == 1) await pauser();
+            }
+        }
+        go();
+    </script>
+</body>
+  
+</html>
