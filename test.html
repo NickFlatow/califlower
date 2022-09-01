@@ -4,7 +4,7 @@
 <body>
     <button id="pl">Play</button>
     <button id="pa">Pause</button>
-      
+    <input type="button" id ="button" value="my button"/>
     <div style="display:flex;">
         <p id="min">0</p>
             
@@ -14,6 +14,15 @@
     </div>
   
     <script>
+        let count = 0;
+        const controller = new AbortController();
+        document.getElementById('button').addEventListener('click',  function (){
+            count++
+            console.log(count)
+            if (count >= 3) {
+                controller.abort()
+            }
+        }, { signal: controller.signal })
         document.getElementById("pl")
             .setAttribute("disabled", "true")
         var stats = 0;
