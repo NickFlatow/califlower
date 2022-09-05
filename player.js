@@ -1,4 +1,4 @@
-import {Sitting, Running, Jumping, Falling,Rolling} from './playerStates.js';
+import {Sitting, Running, Jumping, Falling, Rolling, Standing} from './playerStates.js';
 
 export class Player
 {
@@ -20,9 +20,7 @@ export class Player
         
         this.image = document.getElementById('player');
         
-        this.states = [new Sitting(this),new Running(this),new Jumping(this),new Falling(this), new Rolling(this)];
-        this.currentStates = this.states[0];
-        this.currentStates.enter();
+        
 
         //sprite sheet frame animation
         this.frameX = 0;
@@ -31,6 +29,8 @@ export class Player
         this.fps = 20;
         this.frameInterval = 1000/this.fps;
         this.frameTimer = 0;
+
+        this.states = [new Sitting(this.game),new Running(this.game),new Jumping(this.game),new Falling(this.game), new Rolling(this.game),new Standing(this.game)];
     }
     
     update(input,deltaTime)
@@ -51,9 +51,9 @@ export class Player
         //stop screen when not moving
         else {this.speed = 0;}
 
-        //game boundries
-        if (this.x < -200) {
-            this.x = -200;
+        //game boundries(the player and the backgound know nothing about each other -- this should change to have a side scroller with start and end like mario)
+        if (this.x < 0) {
+            this.x = 0;
             if (this.currentStates != this.states[4]) {this.game.speed = 0;}
         }
         if (this.x > this.game.width/2 - this.width) {this.x = this.game.width/2 - this.width;}

@@ -17,6 +17,7 @@
 #player{
     display: none;
 }
-#layer1, #layer2, #layer3, #layer4, #layer5, #enemy_fly, #enemy_plant, #enemy_spider{
+
+#layer1, #layer2, #layer3, #layer4, #layer5, #enemy_fly, #enemy_plant, #enemy_spider, #fire{
     display: none;
 }
